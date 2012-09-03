@@ -1,4 +1,5 @@
-﻿using fainting.goat.Models;
+﻿using fainting.goat.common;
+using fainting.goat.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,39 @@ namespace fainting.goat.Controllers
 {
     public class MarkdownController : Controller
     {
+        public MarkdownController(IMarkdownToHtml markdownToHtml) {
+            if (markdownToHtml == null) { throw new ArgumentNullException("markdownToHtml"); }
+
+            this.MarkdownToHtml = markdownToHtml;
+        }
+
+        private IMarkdownToHtml MarkdownToHtml { get; set; }
+
         //
         // GET: /Markdown/
         public ActionResult Render(string mdroute)
         {
             MarkdownPageModel pm = new MarkdownPageModel();
-            pm.HtmlToRender = string.Format(@"<h1>{0}</h1><b>from Render()</b>", mdroute);
-            // return View(pm);
-            return new HtmlResult(pm.HtmlToRender);
+
+            string sampleMarkdown =
+@"At first, I tried to create a RegEx for empty string which is `^$` (which is what null would be). However, it doesn't look like route constraints can be `!=`. How about matching one or more character with `^.+$`? Here is my website http://sedodream.com and you can email me at sayedha@microsoft.com.
+
+So:
+
+    tag = @""^.+$""
+    tag = @""^.+$""";
+
+            pm.HtmlToRender = this.MarkdownToHtml.ConvertToHtml(sampleMarkdown);
+            return View(pm);
+        }
+
+        protected string GetMarkdownFor(string path) {
+            if (string.IsNullOrEmpty(path)) { throw new ArgumentNullException("path"); }
+
+            // convert the url path /foo/bar/page.md to \foo\bar\page.md
+
+
+            throw new NotImplementedException();
         }
 
         public class HtmlResult : ActionResult {

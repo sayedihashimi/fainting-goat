@@ -4,5 +4,9 @@
     ViewBag.Title = "Render";
 }
 
-<h2>Render</h2>
-@Model.HtmlToRender
+<h1>header</h1>
+@{ 
+    var writer = this.GetOutputWriter();
+    writer.Write(Model.HtmlToRender);
+}
+<h2>footer</h2>
