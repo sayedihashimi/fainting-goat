@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fainting-goat", "fainting-goat\fainting-goat.csproj", "{FAA64773-76F9-40CA-BE88-689F2EB640AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fainting-goat.common", "fainting-goat.common\fainting-goat.common.csproj", "{1E193DBB-35E3-4F56-BDEA-0FCAB56D42BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAA64773-76F9-40CA-BE88-689F2EB640AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAA64773-76F9-40CA-BE88-689F2EB640AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAA64773-76F9-40CA-BE88-689F2EB640AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAA64773-76F9-40CA-BE88-689F2EB640AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E193DBB-35E3-4F56-BDEA-0FCAB56D42BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E193DBB-35E3-4F56-BDEA-0FCAB56D42BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E193DBB-35E3-4F56-BDEA-0FCAB56D42BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E193DBB-35E3-4F56-BDEA-0FCAB56D42BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

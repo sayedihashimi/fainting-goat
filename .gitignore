@@ -1,0 +1,16 @@
+# Folders to ignore #
+OutputRoot/
+TestResults/
+bin/
+obj/
+_UpgradeReport_Files/
+packages/
+
+# Known files to ignore always #
+*.suo
+*.user
+~*.docx
+msbuild.log
+.dbshell
+*.private
+UpgradeLog*.xml
