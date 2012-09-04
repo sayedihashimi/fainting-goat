@@ -30,17 +30,6 @@ namespace fainting.goat.Controllers
         {
             MarkdownPageModel pm = new MarkdownPageModel();
 
-            string sampleMarkdown =
-@"At first, I tried to create a RegEx for empty string which is `^$` (which is what null would be). However, it doesn't look like route constraints can be `!=`. How about matching one or more character with `^.+$`? Here is my website http://sedodream.com and you can email me at sayedha@microsoft.com.
-
-So:
-
-    tag = @""^.+$""
-    tag = @""^.+$""";
-
-
-            pm.HtmlToRender = this.MarkdownToHtml.ConvertToHtml(sampleMarkdown);
-
             string md = this.GetMarkdownFor(mdroute);
 
             pm.HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md);
