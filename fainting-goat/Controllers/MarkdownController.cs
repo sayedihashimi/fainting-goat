@@ -10,15 +10,19 @@ namespace fainting.goat.Controllers
 {
     public class MarkdownController : Controller
     {
-        public MarkdownController(IMarkdownToHtml markdownToHtml,IContentRepository contentRepo) {
+        public MarkdownController(IConfigHelper configHelper, IMarkdownToHtml markdownToHtml,IContentRepository contentRepo) {
+            if (configHelper == null) { throw new ArgumentNullException("configHelper"); }
             if (markdownToHtml == null) { throw new ArgumentNullException("markdownToHtml"); }
             if (contentRepo == null) { throw new ArgumentNullException("contentRepo"); }
 
+            this.ConfigHelper = configHelper;
             this.MarkdownToHtml = markdownToHtml;
+            this.ContentRepo = contentRepo;
         }
 
         private IMarkdownToHtml MarkdownToHtml { get; set; }
         private IContentRepository ContentRepo { get; set; }
+        private IConfigHelper ConfigHelper { get; set; }
 
         //
         // GET: /Markdown/
@@ -34,23 +38,34 @@ So:
     tag = @""^.+$""
     tag = @""^.+$""";
 
+
             pm.HtmlToRender = this.MarkdownToHtml.ConvertToHtml(sampleMarkdown);
+
+            string md = this.GetMarkdownFor(mdroute);
+
+            pm.HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md);
+
             return View(pm);
         }
 
         protected string GetMarkdownFor(string path) {
             if (string.IsNullOrEmpty(path)) { throw new ArgumentNullException("path"); }
 
-            // convert the url path /foo/bar/page.md to \foo\bar\page.md
+            string localPath = this.ConvertMdUriToLocalPath(path);
 
-
-            throw new NotImplementedException();
+            return this.ContentRepo.GetContentFor(new Uri(localPath));
         }
 
-        private string ConvertMdUriToLocalPath(string uri) {
-            // convert the url path /foo/bar/page.md to \foo\bar\page.md
+        private string ConvertMdUriToLocalPath(string path) {
+            if (string.IsNullOrEmpty(path)) { throw new ArgumentNullException("path"); }
 
-            throw new NotImplementedException();
+            // convert the url path /foo/bar/page.md to \foo\bar\page.md
+            string localRepoFolderUri = this.ConfigHelper.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder);
+            string pathToConvert = string.Format("{0}{1}", localRepoFolderUri, path);
+
+            string localPath = this.HttpContext.Server.MapPath(pathToConvert);
+
+            return localPath;
         }
 
 
