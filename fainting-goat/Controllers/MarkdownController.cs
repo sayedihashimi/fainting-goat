@@ -10,13 +10,15 @@ namespace fainting.goat.Controllers
 {
     public class MarkdownController : Controller
     {
-        public MarkdownController(IMarkdownToHtml markdownToHtml) {
+        public MarkdownController(IMarkdownToHtml markdownToHtml,IContentRepository contentRepo) {
             if (markdownToHtml == null) { throw new ArgumentNullException("markdownToHtml"); }
+            if (contentRepo == null) { throw new ArgumentNullException("contentRepo"); }
 
             this.MarkdownToHtml = markdownToHtml;
         }
 
         private IMarkdownToHtml MarkdownToHtml { get; set; }
+        private IContentRepository ContentRepo { get; set; }
 
         //
         // GET: /Markdown/
@@ -44,6 +46,13 @@ So:
 
             throw new NotImplementedException();
         }
+
+        private string ConvertMdUriToLocalPath(string uri) {
+            // convert the url path /foo/bar/page.md to \foo\bar\page.md
+
+            throw new NotImplementedException();
+        }
+
 
         public class HtmlResult : ActionResult {
             public HtmlResult(string html){

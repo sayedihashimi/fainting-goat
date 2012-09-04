@@ -30,6 +30,7 @@ namespace fainting.goat {
             var kernel = new StandardKernel();
             
             kernel.Bind<IMarkdownToHtml>().To<MarkdownSharpMarkdownToHtml>();
+            kernel.Bind<IContentRepository>().To<FileContentRepository>();
 
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }

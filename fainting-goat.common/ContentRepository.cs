@@ -1,6 +1,7 @@
 ﻿namespace fainting.goat.common {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
 
@@ -13,7 +14,15 @@
 
     public class FileContentRepository : IContentRepository {
         public string GetContentFor(Uri uri) {
-            throw new NotImplementedException();
+            if (uri == null) { throw new ArgumentNullException("uri"); }
+            if (!uri.IsFile) {
+                throw new ArgumentException(string.Format("FileContentRepository only supports URIs pointing to files, the URI provided is not a valid file URI"));
+            }
+
+            // TODO: This could be optimized to read the file in a streaming manner
+            string contents = File.ReadAllText(uri.LocalPath);
+
+            return contents;
         }
     }
 }
