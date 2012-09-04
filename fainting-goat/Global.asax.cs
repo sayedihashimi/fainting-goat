@@ -1,24 +1,24 @@
-﻿using fainting.goat.common;
-using Ninject;
-using Ninject.Web.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
-
-namespace fainting.goat {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
+﻿namespace fainting.goat {
+    using fainting.goat.App_Start;
+    using fainting.goat.common;
+    using Ninject;
+    using Ninject.Web.Mvc;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Http;
+    using System.Web.Mvc;
+    using System.Web.Optimization;
+    using System.Web.Routing;
 
     public class MvcApplication : System.Web.HttpApplication {
         protected void Application_Start() {
-            AreaRegistration.RegisterAllAreas();
+            IKernel kernel = this.RegisterNinject();
+            this.UpdateGitRepo(kernel);
 
-            this.RegisterNinject();
+            AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -26,7 +26,7 @@ namespace fainting.goat {
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        private void RegisterNinject() {
+        private IKernel RegisterNinject() {
             var kernel = new StandardKernel();
             
             kernel.Bind<IMarkdownToHtml>().To<MarkdownSharpMarkdownToHtml>();
@@ -34,6 +34,23 @@ namespace fainting.goat {
             kernel.Bind<IConfigHelper>().To<ConfigHelper>();
 
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+
+            return kernel;
+        }
+
+        private void UpdateGitRepo(IKernel kernel) {
+            if (kernel == null) { throw new ArgumentNullException("kernel"); }
+
+            Task updateGitRepo = new Task(() => {
+                IConfigHelper cfgHelper = kernel.Get<IConfigHelper>();
+
+                string localPath = this.Context.Server.MapPath(cfgHelper.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder));
+
+                new GitConfig().CreateNewGitClient().PerformPull(localPath);
+                string debug = "dd";
+            });
+
+            updateGitRepo.Start();
         }
     }
 }
