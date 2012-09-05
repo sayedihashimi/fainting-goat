@@ -1,62 +1,31 @@
-﻿using fainting.goat.common;
-using fainting.goat.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace fainting.goat.Controllers
+﻿namespace fainting.goat.Controllers
 {
-    public class MarkdownController : Controller
-    {
-        public MarkdownController(IConfigHelper configHelper, IMarkdownToHtml markdownToHtml,IContentRepository contentRepo) {
-            if (configHelper == null) { throw new ArgumentNullException("configHelper"); }
-            if (markdownToHtml == null) { throw new ArgumentNullException("markdownToHtml"); }
-            if (contentRepo == null) { throw new ArgumentNullException("contentRepo"); }
+    using fainting.goat.common;
+    using fainting.goat.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
 
-            this.ConfigHelper = configHelper;
-            this.MarkdownToHtml = markdownToHtml;
-            this.ContentRepo = contentRepo;
+    public class MarkdownController : MarkdownBaseController
+    {
+        public MarkdownController(IConfigHelper configHelper, IMarkdownToHtml markdownToHtml,IContentRepository contentRepo) :
+        base(configHelper,markdownToHtml,contentRepo)
+        {
         }
 
-        private IMarkdownToHtml MarkdownToHtml { get; set; }
-        private IContentRepository ContentRepo { get; set; }
-        private IConfigHelper ConfigHelper { get; set; }
-
-        //
-        // GET: /Markdown/
         public ActionResult Render(string mdroute)
         {
             MarkdownPageModel pm = new MarkdownPageModel();
 
-            string md = this.GetMarkdownFor(mdroute);
+            string localPath = this.PathHelper.ConvertMdUriToLocalPath(this.HttpContext, mdroute);
+            string md = this.ContentRepo.GetContentFor(new Uri(localPath));
 
             pm.HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md);
 
             return View(pm);
         }
-
-        protected string GetMarkdownFor(string path) {
-            if (string.IsNullOrEmpty(path)) { throw new ArgumentNullException("path"); }
-
-            string localPath = this.ConvertMdUriToLocalPath(path);
-
-            return this.ContentRepo.GetContentFor(new Uri(localPath));
-        }
-
-        private string ConvertMdUriToLocalPath(string path) {
-            if (string.IsNullOrEmpty(path)) { throw new ArgumentNullException("path"); }
-
-            // convert the url path /foo/bar/page.md to \foo\bar\page.md
-            string localRepoFolderUri = this.ConfigHelper.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder);
-            string pathToConvert = string.Format("{0}{1}", localRepoFolderUri, path);
-
-            string localPath = this.HttpContext.Server.MapPath(pathToConvert);
-
-            return localPath;
-        }
-
 
         public class HtmlResult : ActionResult {
             public HtmlResult(string html){
