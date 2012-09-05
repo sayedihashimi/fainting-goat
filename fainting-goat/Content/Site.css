@@ -1,4 +1,4 @@
-﻿body {
+﻿/*body {
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     color: #232323;
@@ -8,10 +8,6 @@
 header, footer, nav, section {
     display: block;
 }
-
-
-/* Styles for basic forms
------------------------------------------------------------*/
 fieldset {
     border: 1px solid #ddd;
     padding: 0 1.4em 1.4em 1.4em;
@@ -35,9 +31,6 @@ textarea {
     margin: 0.5em 0 0 0;
 }
 
-
-/* Styles for validation helpers
------------------------------------------------------------*/
 .field-validation-error {
     color: #f00;
 }
@@ -58,4 +51,39 @@ textarea {
 
 .validation-summary-valid {
     display: none;
+}*/
+
+
+
+
+html {
+    width:100%;
+    background-color:#1e1e1e;
+    text-align:center;
 }
+body {
+    width:100%;    
+    text-align:center;
+}
+
+#leftSection {
+    min-width:10%;
+    background-color:red;
+    float:left;
+}
+#rightSection {
+    min-width:10%;
+    background-color:yellow;
+    float:right;
+}
+
+#mainSection {
+    text-align:center;
+    width:80%;
+    background-color:azure;
+    float:left;
+}
+
+    #mainSection header {
+        vertical-align:middle;
+    }

@@ -21,8 +21,9 @@ namespace fainting.goat {
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css")
+                .Include("~/Content/all.css")
                 .Include("~/Content/site.css")
-                .Include("~/Content/all.css"));
+                );
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
