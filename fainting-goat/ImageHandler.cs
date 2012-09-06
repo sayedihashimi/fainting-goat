@@ -30,21 +30,21 @@
     }
 
     class AsyncOperation : IAsyncResult {
-        private bool _competed;
-        private object _state;
-        private AsyncCallback _callback;
-        private HttpContext _context;
+        private bool Completed { get; set; }
+        private object State { get; set; }
+        private AsyncCallback Callback { get; set; }
+        private HttpContext Context { get; set; }
 
-        bool IAsyncResult.IsCompleted { get { return _competed; } }
+        bool IAsyncResult.IsCompleted { get { return Completed; } }
         WaitHandle IAsyncResult.AsyncWaitHandle { get { return null; } }
-        object IAsyncResult.AsyncState { get { return _state; } }
+        object IAsyncResult.AsyncState { get { return State; } }
         bool IAsyncResult.CompletedSynchronously { get { return false; } }
 
         public AsyncOperation(AsyncCallback callback, HttpContext context, object state) {
-            _callback = callback;
-            _context = context;
-            _state = state;
-            _competed = false;
+            Callback = callback;
+            Context = context;
+            State = state;
+            Completed = false;
         }
 
         public void StartAsyncWork() {
@@ -56,13 +56,14 @@
             IConfig config = kernel.Get<IConfig>();
             PathHelper pathHelper = new PathHelper(config);
 
-            string filePath = pathHelper.ConvertMdUriToLocalPath(_context, _context.Request.Url.AbsolutePath);
+            string filePath = pathHelper.ConvertMdUriToLocalPath(Context, Context.Request.Url.AbsolutePath);
+            // see if the file exists, if so we need to write it to the response
 
-            _context.Response.Write("<p>Completion IsThreadPoolThread is " + Thread.CurrentThread.IsThreadPoolThread + "</p>\r\n");
+            Context.Response.Write("<p>Completion IsThreadPoolThread is " + Thread.CurrentThread.IsThreadPoolThread + "</p>\r\n");
 
-            _context.Response.Write("Hello world from Async Handler!");
-            _competed = true;
-            _callback(this);
+            Context.Response.Write("Hello world from Async Handler!");
+            Completed = true;
+            Callback(this);
         }
     }
 
