@@ -1,4 +1,5 @@
-﻿namespace fainting.goat {
+﻿namespace fainting.goat
+{
     using fainting.goat.App_Start;
     using fainting.goat.common;
     using Ninject;
@@ -13,8 +14,10 @@
     using System.Web.Optimization;
     using System.Web.Routing;
 
-    public class MvcApplication : System.Web.HttpApplication {
-        protected void Application_Start() {
+    public class MvcApplication : System.Web.HttpApplication
+    {
+        protected void Application_Start()
+        {
             IKernel kernel = this.RegisterNinject();
             this.UpdateGitRepo(kernel);
 
@@ -26,19 +29,23 @@
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        private IKernel RegisterNinject() {
+        private IKernel RegisterNinject()
+        {
             IKernel kernel = new NinjectConfig().CreateKernel();
-            
+
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
 
             return kernel;
         }
 
-        private void UpdateGitRepo(IKernel kernel) {
+        private void UpdateGitRepo(IKernel kernel)
+        {
             if (kernel == null) { throw new ArgumentNullException("kernel"); }
 
-            IConfig config = kernel.Get<IConfig>();
-            new GitHelper().UpdateGitRepo(config, this.Context);
+            kernel.Get<GitHelper>().UpdateGitRepo(
+                Server.MapPath(
+                    kernel.Get<IConfig>().GetConfigValue(
+                        CommonConsts.AppSettings.MarkdownSourceFolder)));
         }
     }
 }

@@ -13,6 +13,7 @@
             kernel.Bind<IMarkdownToHtml>().To<MarkdownSharpMarkdownToHtml>();
             kernel.Bind<IContentRepository>().To<FileContentRepository>();
             kernel.Bind<IConfig>().To<Config>();
+            kernel.Bind<IGitClient>().To<NGitGitClient>();
 
             return kernel;
         }

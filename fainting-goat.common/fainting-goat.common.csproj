@@ -71,6 +71,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="ContentRepository.cs" />
     <Compile Include="GitClient.cs" />
+    <Compile Include="GitHelper.cs" />
     <Compile Include="MarkdownToHtml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
