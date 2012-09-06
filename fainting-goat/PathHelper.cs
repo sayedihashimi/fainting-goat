@@ -6,20 +6,20 @@ using System.Web;
 
 namespace fainting.goat {
     public class PathHelper {
-        public PathHelper(IConfigHelper configHelper) {
-            if (configHelper == null) { throw new ArgumentNullException("configHelper"); }
+        public PathHelper(IConfig config) {
+            if (config == null) { throw new ArgumentNullException("config"); }
 
-            this.ConfigHelper = configHelper;
+            this.Config = config;
         }
 
-        private IConfigHelper ConfigHelper { get; set; }
+        private IConfig Config { get; set; }
 
         internal string ConvertMdUriToLocalPath(HttpContextBase httpContext, string path) {
             if (httpContext == null) { throw new ArgumentNullException("httpContext"); }
             if (string.IsNullOrEmpty(path)) { throw new ArgumentNullException("path"); }
 
             // convert the url path /foo/bar/page.md to \foo\bar\page.md
-            string localRepoFolderUri = this.ConfigHelper.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder);
+            string localRepoFolderUri = this.Config.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder);
             string pathToConvert = string.Format("{0}{1}", localRepoFolderUri, path);
 
             string localPath = httpContext.Server.MapPath(pathToConvert);

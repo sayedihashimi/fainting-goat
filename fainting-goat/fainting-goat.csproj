@@ -147,6 +147,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MarkdownBaseController.cs" />
     <Compile Include="Controllers\MarkdownController.cs" />
+    <Compile Include="GitHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

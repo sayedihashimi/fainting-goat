@@ -10,8 +10,8 @@
 
     public class MarkdownController : MarkdownBaseController
     {
-        public MarkdownController(IConfigHelper configHelper, IMarkdownToHtml markdownToHtml,IContentRepository contentRepo) :
-        base(configHelper,markdownToHtml,contentRepo)
+        public MarkdownController(IConfig config, IMarkdownToHtml markdownToHtml,IContentRepository contentRepo) :
+        base(config,markdownToHtml,contentRepo)
         {
         }
 
@@ -25,6 +25,12 @@
             pm.HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md);
 
             return View(pm);
+        }
+
+        public string UpdateRepo() {
+            new GitHelper().UpdateGitRepo(this.Config, this.HttpContext);
+
+            return "Updating";
         }
 
         public class HtmlResult : ActionResult {

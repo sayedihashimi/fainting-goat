@@ -5,12 +5,12 @@
     using System.Linq;
     using System.Text;
 
-    public interface IConfigHelper {
+    public interface IConfig {
         string GetConfigValue(string key, bool isRequired=false);
     }
 
-    public class ConfigHelper : IConfigHelper {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(ConfigHelper));
+    public class Config : IConfig {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(Config));
         
         public string GetConfigValue(string key, bool isRequired=false) {
             if (string.IsNullOrEmpty(key)) { throw new ArgumentNullException("key"); }

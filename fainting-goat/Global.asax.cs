@@ -31,7 +31,7 @@
             
             kernel.Bind<IMarkdownToHtml>().To<MarkdownSharpMarkdownToHtml>();
             kernel.Bind<IContentRepository>().To<FileContentRepository>();
-            kernel.Bind<IConfigHelper>().To<ConfigHelper>();
+            kernel.Bind<IConfig>().To<Config>();
 
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
 
@@ -41,16 +41,18 @@
         private void UpdateGitRepo(IKernel kernel) {
             if (kernel == null) { throw new ArgumentNullException("kernel"); }
 
-            Task updateGitRepo = new Task(() => {
-                IConfigHelper cfgHelper = kernel.Get<IConfigHelper>();
+            IConfig config = kernel.Get<IConfig>();
+            new GitHelper().UpdateGitRepo(config, this.Context);
 
-                string localPath = this.Context.Server.MapPath(cfgHelper.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder));
+            //Task updateGitRepo = new Task(() => {
+            //    IConfig config = kernel.Get<IConfig>();
 
-                new GitConfig().CreateNewGitClient().PerformPull(localPath);
-                string debug = "dd";
-            });
+            //    string localPath = this.Context.Server.MapPath(config.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder));
 
-            updateGitRepo.Start();
+            //    new GitConfig().CreateNewGitClient().PerformPull(localPath);
+            //});
+
+            //updateGitRepo.Start();
         }
     }
 }

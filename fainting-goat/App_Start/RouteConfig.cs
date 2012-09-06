@@ -11,10 +11,16 @@ namespace fainting.goat {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "markdown-route",
+                name: "markdown",
                 url: "{*mdroute}",
                 defaults: new { controller = "Markdown", action = "Render" },
                 constraints: new { mdroute = @".+\.md$" }
+                );
+
+            routes.MapRoute(
+                name: "gitupdate",
+                url: "git/update",
+                defaults: new { controller = "Markdown", action = "UpdateRepo" }
                 );
 
             routes.MapRoute(

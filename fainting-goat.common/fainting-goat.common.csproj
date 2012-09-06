@@ -68,7 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonConsts.cs" />
-    <Compile Include="ConfigHelper.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="ContentRepository.cs" />
     <Compile Include="GitClient.cs" />
     <Compile Include="MarkdownToHtml.cs" />

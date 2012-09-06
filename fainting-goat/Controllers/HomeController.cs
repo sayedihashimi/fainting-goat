@@ -10,8 +10,8 @@
 
     public class HomeController : MarkdownBaseController
     {
-        public HomeController(IConfigHelper configHelper, IMarkdownToHtml markdownToHtml, IContentRepository contentRepo) :
-            base(configHelper, markdownToHtml, contentRepo) {
+        public HomeController(IConfig config, IMarkdownToHtml markdownToHtml, IContentRepository contentRepo) :
+            base(config, markdownToHtml, contentRepo) {
         }
 
         public ActionResult Index()
