@@ -4,21 +4,19 @@
     using Ninject;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading;
     using System.Web;
 
     public class ImageHandler : IHttpAsyncHandler {
         public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData) {
-            context.Response.Write("<p>Begin IsThreadPoolThread is " + Thread.CurrentThread.IsThreadPoolThread + "</p>\r\n");
             AsyncOperation async = new AsyncOperation(cb, context, extraData);
             async.StartAsyncWork();
             return async;
         }
 
-        public void EndProcessRequest(IAsyncResult result) {
-
-        }
+        public void EndProcessRequest(IAsyncResult result) {}
 
         public bool IsReusable {
             get { return false; }
@@ -56,12 +54,26 @@
             IConfig config = kernel.Get<IConfig>();
             PathHelper pathHelper = new PathHelper(config);
 
-            string filePath = pathHelper.ConvertMdUriToLocalPath(Context, Context.Request.Url.AbsolutePath);
-            // see if the file exists, if so we need to write it to the response
+            string localPath = Context.Server.MapPath(Context.Request.Url.AbsolutePath);
+            string repoFilePath = pathHelper.ConvertMdUriToLocalPath(Context, Context.Request.Url.AbsolutePath);
 
-            Context.Response.Write("<p>Completion IsThreadPoolThread is " + Thread.CurrentThread.IsThreadPoolThread + "</p>\r\n");
+            string fileToReturn = File.Exists(localPath) ? localPath : repoFilePath;
 
-            Context.Response.Write("Hello world from Async Handler!");
+            // see if the file exists, if so we need to write it to the response      
+            if (File.Exists(fileToReturn)) {
+                var objImage = System.Drawing.Bitmap.FromFile(fileToReturn);
+                MemoryStream objMemoryStream = new MemoryStream();
+                objImage.Save(objMemoryStream, System.Drawing.Imaging.ImageFormat.Png);
+                byte[] imageContent = new byte[objMemoryStream.Length];
+                objMemoryStream.Position = 0;
+                objMemoryStream.Read(imageContent, 0, (int)objMemoryStream.Length);
+                Context.Response.ContentType = "image/png";
+                Context.Response.BinaryWrite(imageContent);
+            }
+            else {
+                Context.Response.StatusCode = 404;
+            }
+
             Completed = true;
             Callback(this);
         }

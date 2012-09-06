@@ -13,6 +13,10 @@ namespace fainting.goat {
                 url: "{*sampleroute}",
                 constraints: new { sampleroute = @".+\.sample$" });
 
+            routes.IgnoreRoute(
+                url: "{*pngroute}",
+                constraints: new { pngroute = @".+\.png$" });
+
             routes.MapRoute(
                 name: "markdown",
                 url: "{*mdroute}",
