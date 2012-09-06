@@ -27,12 +27,8 @@
         }
 
         private IKernel RegisterNinject() {
-            var kernel = new StandardKernel();
+            IKernel kernel = new NinjectConfig().CreateKernel();
             
-            kernel.Bind<IMarkdownToHtml>().To<MarkdownSharpMarkdownToHtml>();
-            kernel.Bind<IContentRepository>().To<FileContentRepository>();
-            kernel.Bind<IConfig>().To<Config>();
-
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
 
             return kernel;
@@ -43,16 +39,6 @@
 
             IConfig config = kernel.Get<IConfig>();
             new GitHelper().UpdateGitRepo(config, this.Context);
-
-            //Task updateGitRepo = new Task(() => {
-            //    IConfig config = kernel.Get<IConfig>();
-
-            //    string localPath = this.Context.Server.MapPath(config.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder));
-
-            //    new GitConfig().CreateNewGitClient().PerformPull(localPath);
-            //});
-
-            //updateGitRepo.Start();
         }
     }
 }

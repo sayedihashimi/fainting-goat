@@ -26,5 +26,18 @@ namespace fainting.goat {
 
             return localPath;
         }
+
+        internal string ConvertMdUriToLocalPath(HttpContext httpContext, string path) {
+            if (httpContext == null) { throw new ArgumentNullException("httpContext"); }
+            if (string.IsNullOrEmpty(path)) { throw new ArgumentNullException("path"); }
+
+            // convert the url path /foo/bar/page.md to \foo\bar\page.md
+            string localRepoFolderUri = this.Config.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder);
+            string pathToConvert = string.Format("{0}{1}", localRepoFolderUri, path);
+
+            string localPath = httpContext.Server.MapPath(pathToConvert);
+
+            return localPath;
+        }
     }
 }

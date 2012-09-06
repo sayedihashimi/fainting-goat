@@ -9,6 +9,9 @@ namespace fainting.goat {
     public class RouteConfig {
         public static void RegisterRoutes(RouteCollection routes) {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute(
+                url: "{*sampleroute}",
+                constraints: new { sampleroute = @".+\.sample$" });
 
             routes.MapRoute(
                 name: "markdown",
