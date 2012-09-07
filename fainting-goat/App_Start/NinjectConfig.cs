@@ -1,6 +1,8 @@
 ﻿namespace fainting.goat {
     using fainting.goat.common;
     using Ninject;
+    using System;
+    using System.Web;
 
     public class NinjectConfig {
         public IKernel CreateKernel() {

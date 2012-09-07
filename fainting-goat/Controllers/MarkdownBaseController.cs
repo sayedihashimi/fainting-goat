@@ -10,7 +10,12 @@
 
     public abstract class MarkdownBaseController : Controller
     {
-        public MarkdownBaseController(IConfig config, IMarkdownToHtml markdownToHtml, IContentRepository contentRepo, GitHelper gitHelper)
+        public MarkdownBaseController(IConfig config, 
+            IMarkdownToHtml markdownToHtml, 
+            IContentRepository contentRepo, 
+            GitHelper gitHelper,
+            PathHelper pathHelper
+            )
         {
             if (config == null) { throw new ArgumentNullException("config"); }
             if (markdownToHtml == null) { throw new ArgumentNullException("markdownToHtml"); }
@@ -19,7 +24,7 @@
             this.Config = config;
             this.MarkdownToHtml = markdownToHtml;
             this.ContentRepo = contentRepo;
-            this.PathHelper = new PathHelper(this.Config);
+            this.PathHelper = pathHelper;
             this.GitHelper = gitHelper;
         }
 

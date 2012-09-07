@@ -10,8 +10,8 @@
 
     public class MarkdownController : MarkdownBaseController
     {
-        public MarkdownController(IConfig config, IMarkdownToHtml markdownToHtml, IContentRepository contentRepo, GitHelper gitHelper) :
-            base(config, markdownToHtml, contentRepo, gitHelper)
+        public MarkdownController(IConfig config, IMarkdownToHtml markdownToHtml, IContentRepository contentRepo, GitHelper gitHelper, PathHelper pathHelper) :
+            base(config, markdownToHtml, contentRepo, gitHelper, pathHelper)
         {
         }
 

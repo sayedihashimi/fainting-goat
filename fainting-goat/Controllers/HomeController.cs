@@ -10,8 +10,8 @@
 
     public class HomeController : MarkdownBaseController
     {
-        public HomeController(IConfig config, IMarkdownToHtml markdownToHtml, IContentRepository contentRepo, GitHelper gitHelper) :
-            base(config, markdownToHtml, contentRepo, gitHelper)
+        public HomeController(IConfig config, IMarkdownToHtml markdownToHtml, IContentRepository contentRepo, GitHelper gitHelper, PathHelper pathHelper) :
+            base(config, markdownToHtml, contentRepo, gitHelper, pathHelper)
         {
         }
 
