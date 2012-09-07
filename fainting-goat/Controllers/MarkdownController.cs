@@ -15,16 +15,26 @@
         {
         }
 
+        public ActionResult Index() {
+            return View(@"/Views/Markdown/Render.cshtml",
+                this.MakeMarkDownViewModel("index.md")
+                );
+        }
+
         public ActionResult Render(string mdroute)
         {
-            MarkdownPageModel pm = new MarkdownPageModel();
+            return View(this.MakeMarkDownViewModel(mdroute));
+        }
 
+        private MarkdownPageModel MakeMarkDownViewModel(string mdroute) {
             string localPath = this.PathHelper.ConvertMdUriToLocalPath(mdroute, (s) => Server.MapPath(s));
             string md = this.ContentRepo.GetContentFor(new Uri(localPath));
 
-            pm.HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md);
+            MarkdownPageModel pm = new MarkdownPageModel {
+                HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md)
+            };
 
-            return View(pm);
+            return pm;
         }
 
         public string UpdateRepo()
