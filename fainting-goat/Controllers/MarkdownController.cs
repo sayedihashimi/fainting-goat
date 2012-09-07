@@ -30,7 +30,6 @@
         public string UpdateRepo()
         {
             GitHelper.UpdateGitRepo(Server.MapPath(Config.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder)));
-
             return "Updating";
         }
 
