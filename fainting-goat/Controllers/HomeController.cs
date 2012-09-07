@@ -17,7 +17,7 @@
 
         public ActionResult Index()
         {
-            string localPath = this.PathHelper.ConvertMdUriToLocalPath(this.HttpContext, "index.md");
+            string localPath = this.PathHelper.ConvertMdUriToLocalPath("index.md", (s) => Server.MapPath(s));
             string md = this.ContentRepo.GetContentFor(new Uri(localPath));
 
             MarkdownPageModel pm = new MarkdownPageModel {

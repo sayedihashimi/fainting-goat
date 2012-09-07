@@ -1,10 +1,6 @@
-﻿namespace fainting.goat.App_Start {
+﻿namespace fainting.goat {
     using fainting.goat.common;
     using Ninject;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
 
     public class NinjectConfig {
         public IKernel CreateKernel() {

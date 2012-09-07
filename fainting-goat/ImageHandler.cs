@@ -1,5 +1,4 @@
 ﻿namespace fainting.goat {
-    using fainting.goat.App_Start;
     using fainting.goat.common;
     using Ninject;
     using System;
@@ -55,7 +54,8 @@
             PathHelper pathHelper = new PathHelper(config);
 
             string localPath = Context.Server.MapPath(Context.Request.Url.AbsolutePath);
-            string repoFilePath = pathHelper.ConvertMdUriToLocalPath(Context, Context.Request.Url.AbsolutePath);
+            string repoFilePath = pathHelper.ConvertMdUriToLocalPath(Context.Request.Url.AbsolutePath, 
+                (s) => this.Context.Server.MapPath(s));
 
             string fileToReturn = File.Exists(localPath) ? localPath : repoFilePath;
 

@@ -19,7 +19,7 @@
         {
             MarkdownPageModel pm = new MarkdownPageModel();
 
-            string localPath = this.PathHelper.ConvertMdUriToLocalPath(this.HttpContext, mdroute);
+            string localPath = this.PathHelper.ConvertMdUriToLocalPath(mdroute, (s) => Server.MapPath(s));
             string md = this.ContentRepo.GetContentFor(new Uri(localPath));
 
             pm.HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md);
