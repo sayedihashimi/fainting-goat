@@ -32,23 +32,5 @@
             GitHelper.UpdateGitRepo(Server.MapPath(Config.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder)));
             return "Updating";
         }
-
-        public class HtmlResult : ActionResult
-        {
-            public HtmlResult(string html)
-            {
-                if (html == null) { throw new ArgumentNullException("html"); }
-                this.Html = html;
-            }
-
-            private string Html { get; set; }
-
-            public override void ExecuteResult(ControllerContext context)
-            {
-                HttpContextBase httpContextBase = context.HttpContext;
-
-                httpContextBase.Response.Write(this.Html);
-            }
-        }
     }
 }
