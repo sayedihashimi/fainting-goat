@@ -5,6 +5,7 @@ bin/
 obj/
 _UpgradeReport_Files/
 packages/
+build-out
 
 # Known files to ignore always #
 *.suo
