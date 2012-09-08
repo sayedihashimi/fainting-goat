@@ -13,9 +13,15 @@
     }
 
     public class FileContentRepository : IContentRepository {
+        private PathHelper _pathHelper;
+
+        public FileContentRepository(PathHelper pathHelper) {
+            _pathHelper = pathHelper;
+        }
+
         public string GetContentFor(Uri uri) {
-            if (uri == null) { throw new ArgumentNullException("uri"); }
-            if (!uri.IsFile) {
+            if(uri == null) { throw new ArgumentNullException("uri"); }
+            if(!uri.IsFile) {
                 throw new ArgumentException(string.Format("FileContentRepository only supports URIs pointing to files, the URI provided is not a valid file URI"));
             }
 

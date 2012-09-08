@@ -1,6 +1,5 @@
 ﻿namespace fainting.goat
 {
-    using fainting.goat.App_Start;
     using fainting.goat.common;
     using Ninject;
     using Ninject.Web.Mvc;

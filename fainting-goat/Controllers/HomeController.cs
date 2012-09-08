@@ -10,14 +10,14 @@
 
     public class HomeController : MarkdownBaseController
     {
-        public HomeController(IConfig config, IMarkdownToHtml markdownToHtml, IContentRepository contentRepo, GitHelper gitHelper) :
-            base(config, markdownToHtml, contentRepo, gitHelper)
+        public HomeController(IConfig config, IMarkdownToHtml markdownToHtml, IContentRepository contentRepo, GitHelper gitHelper, PathHelper pathHelper) :
+            base(config, markdownToHtml, contentRepo, gitHelper, pathHelper)
         {
         }
 
         public ActionResult Index()
         {
-            string localPath = this.PathHelper.ConvertMdUriToLocalPath(this.HttpContext, "index.md");
+            string localPath = this.PathHelper.ConvertMdUriToLocalPath("index.md", (s) => Server.MapPath(s));
             string md = this.ContentRepo.GetContentFor(new Uri(localPath));
 
             MarkdownPageModel pm = new MarkdownPageModel {

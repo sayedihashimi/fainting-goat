@@ -10,46 +10,37 @@
 
     public class MarkdownController : MarkdownBaseController
     {
-        public MarkdownController(IConfig config, IMarkdownToHtml markdownToHtml, IContentRepository contentRepo, GitHelper gitHelper) :
-            base(config, markdownToHtml, contentRepo, gitHelper)
+        public MarkdownController(IConfig config, IMarkdownToHtml markdownToHtml, IContentRepository contentRepo, GitHelper gitHelper, PathHelper pathHelper) :
+            base(config, markdownToHtml, contentRepo, gitHelper, pathHelper)
         {
+        }
+
+        public ActionResult Index() {
+            return View(@"/Views/Markdown/Render.cshtml",
+                this.MakeMarkDownViewModel("index.md")
+                );
         }
 
         public ActionResult Render(string mdroute)
         {
-            MarkdownPageModel pm = new MarkdownPageModel();
+            return View(this.MakeMarkDownViewModel(mdroute));
+        }
 
-            string localPath = this.PathHelper.ConvertMdUriToLocalPath(this.HttpContext, mdroute);
+        private MarkdownPageModel MakeMarkDownViewModel(string mdroute) {
+            string localPath = this.PathHelper.ConvertMdUriToLocalPath(mdroute, (s) => Server.MapPath(s));
             string md = this.ContentRepo.GetContentFor(new Uri(localPath));
 
-            pm.HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md);
+            MarkdownPageModel pm = new MarkdownPageModel {
+                HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md)
+            };
 
-            return View(pm);
+            return pm;
         }
 
         public string UpdateRepo()
         {
             GitHelper.UpdateGitRepo(Server.MapPath(Config.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder)));
-
             return "Updating";
-        }
-
-        public class HtmlResult : ActionResult
-        {
-            public HtmlResult(string html)
-            {
-                if (html == null) { throw new ArgumentNullException("html"); }
-                this.Html = html;
-            }
-
-            private string Html { get; set; }
-
-            public override void ExecuteResult(ControllerContext context)
-            {
-                HttpContextBase httpContextBase = context.HttpContext;
-
-                httpContextBase.Response.Write(this.Html);
-            }
         }
     }
 }

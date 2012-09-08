@@ -22,7 +22,7 @@
                 string fileContentsExpected = fileContents.ToString();
                 string tempFile = this.WriteTextToTempFile(fileContentsExpected);
 
-                IContentRepository fileRepo = new FileContentRepository();
+                IContentRepository fileRepo = new FileContentRepository(new PathHelper(new Config()));
                 string fileContentsActual = fileRepo.GetContentFor(new Uri(tempFile));
 
                 Assert.AreEqual(fileContentsExpected, fileContentsActual);

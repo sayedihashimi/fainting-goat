@@ -1,15 +1,17 @@
 ﻿namespace fainting.goat {
-    using fainting.goat.App_Start;
     using fainting.goat.common;
     using Ninject;
     using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Threading;
     using System.Web;
 
     public class ImageHandler : IHttpAsyncHandler {
+
+        public ImageHandler() {
+
+        }
+
         public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData) {
             AsyncOperation async = new AsyncOperation(cb, context, extraData);
             async.StartAsyncWork();
@@ -55,7 +57,8 @@
             PathHelper pathHelper = new PathHelper(config);
 
             string localPath = Context.Server.MapPath(Context.Request.Url.AbsolutePath);
-            string repoFilePath = pathHelper.ConvertMdUriToLocalPath(Context, Context.Request.Url.AbsolutePath);
+            string repoFilePath = pathHelper.ConvertMdUriToLocalPath(Context.Request.Url.AbsolutePath, 
+                (s) => this.Context.Server.MapPath(s));
 
             string fileToReturn = File.Exists(localPath) ? localPath : repoFilePath;
 
