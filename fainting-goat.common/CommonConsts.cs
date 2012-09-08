@@ -7,7 +7,7 @@
     public class CommonConsts {
         public class AppSettings {
             public const string MarkdownSourceFolder = "markdownSourceFolder";
-            public const string GitUrl = "gitUrl";
+            public const string GitUri = "gitUri";
         }
     }
 }
