@@ -16,10 +16,22 @@
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        static internal IKernel Kernel { get; set; }
+        static object KernelLock = new object();
+
+        public MvcApplication() {
+            if (MvcApplication.Kernel == null) {
+                lock (KernelLock) {
+                    if (MvcApplication.Kernel == null) {
+                        MvcApplication.Kernel = this.RegisterNinject();
+                    }
+                }
+            }
+        }
+        
         protected void Application_Start()
         {
-            IKernel kernel = this.RegisterNinject();
-            this.UpdateGitRepo(kernel);
+            this.UpdateGitRepo(MvcApplication.Kernel);
 
             AreaRegistration.RegisterAllAreas();
 

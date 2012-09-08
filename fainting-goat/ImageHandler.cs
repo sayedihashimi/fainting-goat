@@ -50,7 +50,7 @@
         }
 
         public void StartAsyncTask(object workItemState) {
-            IKernel kernel = new NinjectConfig().CreateKernel();
+            IKernel kernel = MvcApplication.Kernel;
             IConfig config = kernel.Get<IConfig>();
             PathHelper pathHelper = new PathHelper(config);
 
