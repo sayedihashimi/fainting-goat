@@ -34,6 +34,23 @@
         protected PathHelper PathHelper { get; set; }
         protected GitHelper GitHelper { get; set; }
 
+        protected string GetDefaultDocumentFullLocalPath() {
+            IList<string> defaultDocListConfig = this.Config.GetList(CommonConsts.AppSettings.DefaultDocList, defaultValue: CommonConsts.AppSettings.DefaultValues.DefaultDocList);
+
+            string result = null;
+
+            for (int i = 0; i < defaultDocListConfig.Count; i++) {
+                string fileName = defaultDocListConfig[i];
+                string fileNameLocalpath = this.PathHelper.ConvertMdUriToLocalPath(fileName, (s) => Server.MapPath(s));
+                if (System.IO.File.Exists(fileNameLocalpath)) {
+                    result = fileNameLocalpath;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
         protected string GetNavHtml() {
             string result = string.Empty;
 
@@ -63,7 +80,7 @@
         protected string GetTitle() {
             string titleFromConfig = this.Config.GetConfigValue(CommonConsts.AppSettings.FaintingGoatWebTitle);
 
-            return titleFromConfig != null ? titleFromConfig : "Project documentation";
+            return titleFromConfig != null ? titleFromConfig : CommonConsts.AppSettings.DefaultValues.FaintingGoatWebTitle;
         }
     }
 }
