@@ -166,6 +166,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MarkdownBaseController.cs" />
     <Compile Include="Controllers\MarkdownController.cs" />
+    <Compile Include="ConvertFileNotFoundTo404.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -1,13 +1,11 @@
 ﻿namespace fainting.goat.Controllers
 {
     using fainting.goat.common;
-    using fainting.goat.Models;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
 
+    [ConvertFileNotFoundTo404]
     public abstract class MarkdownBaseController : Controller
     {
         public MarkdownBaseController(IConfig config, 
