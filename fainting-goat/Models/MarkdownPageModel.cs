@@ -12,6 +12,6 @@ namespace fainting.goat.Models {
 
         public string HtmlToRender { get; set; }
         public string NavHtml { get; set; }
-        public string MarkdownTitle { get; set; }
+        public string FaintingGoatWebTitle { get; set; }
     }
 }

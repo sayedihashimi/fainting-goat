@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -54,6 +55,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
+    <Compile Include="ConfigTests.cs" />
+    <Compile Include="CustomAssert.cs" />
     <Compile Include="FileContentRepositoryTests.cs" />
     <Compile Include="Helpers\RandomDataHelper.cs" />
     <Compile Include="Helpers\RandomPrimitives.cs" />

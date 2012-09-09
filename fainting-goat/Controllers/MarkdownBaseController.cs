@@ -61,7 +61,7 @@
         }
 
         protected string GetTitle() {
-            string titleFromConfig = this.Config.GetConfigValue(CommonConsts.AppSettings.MarkdownTitle);
+            string titleFromConfig = this.Config.GetConfigValue(CommonConsts.AppSettings.FaintingGoatWebTitle);
 
             return titleFromConfig != null ? titleFromConfig : "Project documentation";
         }

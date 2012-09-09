@@ -9,11 +9,11 @@
                     match="/configuration/appSettings/add[@key='gitUri']/@value" />
   </parameter>
 
-  <parameter name="markdownTitle"
+  <parameter name="faintingGoatWebTitle"
                description="The title of your website, it will be shown in the header of the users' browser"
                defaultValue="Project Documentation">
     <parameterEntry kind="XmlFile"
                     scope="\\web.config$"
-                    match="/configuration/appSettings/add[@key='markdownTitle']/@value" />
+                    match="/configuration/appSettings/add[@key='faintingGoatWebTitle']/@value" />
   </parameter>
 </parameters>

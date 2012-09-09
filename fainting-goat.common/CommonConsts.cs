@@ -8,7 +8,7 @@
         public class AppSettings {
             public const string MarkdownSourceFolder = "markdownSourceFolder";
             public const string GitUri = "gitUri";
-            public const string MarkdownTitle = "markdownTitle";
+            public const string FaintingGoatWebTitle = "faintingGoatWebTitle";
         }
     }
 }

@@ -7,6 +7,8 @@
 
     public interface IConfig {
         string GetConfigValue(string key, bool isRequired=false);
+
+        IList<string> GetList(string key, char delimiter = ';', bool isRequired = false);
     }
 
     public class Config : IConfig {
@@ -21,6 +23,22 @@
                 string message = string.Format("Missing required configuration value [{0}]", key);
                 log.Error(message);
                 throw new ConfigurationErrorsException(message);
+            }
+
+            return result;
+        }
+
+        public IList<string> GetList(string key,char delimiter=';', bool isRequired = false) {
+            if (string.IsNullOrEmpty(key)) { throw new ArgumentNullException("key"); }
+            if (delimiter == null) { throw new ArgumentNullException("delimiter"); }
+
+            IList<string> result = null;
+            string configValue = this.GetConfigValue(key, isRequired);
+            if (configValue != null) {
+                string[] values = configValue.Split(delimiter);
+                if (values != null && values.Length > 0) {
+                    result = values.ToList();
+                }
             }
 
             return result;
