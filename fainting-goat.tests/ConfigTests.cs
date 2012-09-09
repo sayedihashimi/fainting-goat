@@ -33,6 +33,15 @@
                 IConfig config = new Config();
                 string result = config.GetConfigValue("doesnt-exist", isRequired: true);
             }
+
+            [TestMethod]
+            public void ReturnsTheDefaultValueWhenConfigValueNotFound() {
+                IConfig config = new Config();
+                string expectedResult = "default-value";
+                string actualResult = config.GetConfigValue("doesnt-exist", defaultValue: expectedResult);
+
+                Assert.AreEqual(expectedResult, actualResult);
+            }
         }
         [TestClass]
         public class TheGetListMethod {
@@ -69,6 +78,15 @@
                 IList<string> expectedResult = new List<string> { "one", "two", "three", "four" };
 
                 CustomAssert.AreEqual<string>(expectedResult, actualResult, (x, y) => { Assert.AreEqual(x, y); });
+            }
+
+            [TestMethod]
+            public void ReturnsTheDefaultValueWhenConfigValueNotFound() {
+                IConfig config = new Config();
+                IList<string> expectedResult = new List<string> { "default", "value", "here" };
+                IList<string> actualResult = config.GetList("doesnt-exist", defaultValue: expectedResult);
+
+                Assert.AreEqual(expectedResult, actualResult);
             }
         }
     }
