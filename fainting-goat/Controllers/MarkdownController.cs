@@ -31,7 +31,8 @@
             string md = this.ContentRepo.GetContentFor(new Uri(localPath));
 
             MarkdownPageModel pm = new MarkdownPageModel {
-                HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md)
+                HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md),
+                NavHtml = this.GetNavHtml()
             };
 
             return pm;
@@ -41,6 +42,6 @@
         {
             GitHelper.UpdateGitRepo(Server.MapPath(Config.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder)));
             return "Updating";
-        }
+        }        
     }
 }

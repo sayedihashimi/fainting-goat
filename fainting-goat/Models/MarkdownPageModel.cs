@@ -7,7 +7,10 @@ namespace fainting.goat.Models {
     public class MarkdownPageModel {
         public MarkdownPageModel() {
             this.HtmlToRender = string.Empty;
+            this.NavHtml = string.Empty;
         }
+
         public string HtmlToRender { get; set; }
+        public string NavHtml { get; set; }
     }
 }

@@ -11,7 +11,7 @@
 <body>
     <section id="leftSection">&nbsp;</section>
     <section id="mainSection">
-        @Html.Partial("Header")
+        @RenderSection("header",required:false)
 
         <article id="articleBody">
         @RenderBody()

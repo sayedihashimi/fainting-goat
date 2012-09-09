@@ -4,6 +4,23 @@
     ViewBag.Title = "TODO";
 }
 
+@section header{
+    @{
+        if(!string.IsNullOrEmpty(Model.NavHtml)){
+            var hWriter = this.GetOutputWriter();
+            hWriter.Write(Model.NavHtml);
+        }
+        else{
+<header id="topHeader">
+    <section id="headerLogo">
+        <img src="@Url.Content("~/Content/images/logo-16.png")" alt="logo" />
+        <span>Web Publish Docs for Visual Studio 2012</span>
+    </section>
+</header>
+        }
+    }
+}
+
 @{ 
     var writer = this.GetOutputWriter();
     writer.Write(Model.HtmlToRender);

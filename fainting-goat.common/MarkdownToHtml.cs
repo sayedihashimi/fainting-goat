@@ -16,7 +16,7 @@
         public MarkdownSharpMarkdownToHtml() {
             MarkdownOptions options = new MarkdownOptions();
             options.AutoHyperlink = true;
-            options.AutoNewLines = true;
+            // options.AutoNewLines = true;
             options.LinkEmails = true;
 
             this.Markdown = new Markdown(options);

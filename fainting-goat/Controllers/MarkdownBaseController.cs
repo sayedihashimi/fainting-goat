@@ -33,5 +33,31 @@
         protected IConfig Config { get; set; }
         protected PathHelper PathHelper { get; set; }
         protected GitHelper GitHelper { get; set; }
+
+        protected string GetNavHtml() {
+            string result = string.Empty;
+
+            List<string> navFilesToTry = new List<string> {
+                this.PathHelper.ConvertMdUriToLocalPath("nav.md", (s) => Server.MapPath(s)),
+                this.PathHelper.ConvertMdUriToLocalPath("nav.markdown", (s) => Server.MapPath(s)),
+                this.PathHelper.ConvertMdUriToLocalPath("nav.mdown", (s) => Server.MapPath(s))
+            };
+
+            string navFile = null;
+
+            foreach (var nf in navFilesToTry) {
+                if (System.IO.File.Exists(nf)) {
+                    navFile = nf;
+                    break;
+                }
+            }
+
+            if (navFile != null) {
+                string md = this.ContentRepo.GetContentFor(new Uri(navFile));
+                result = this.MarkdownToHtml.ConvertToHtml(md);
+            }
+
+            return result;
+        }
     }
 }
