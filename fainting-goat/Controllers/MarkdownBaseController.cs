@@ -59,5 +59,11 @@
 
             return result;
         }
+
+        protected string GetTitle() {
+            string titleFromConfig = this.Config.GetConfigValue(CommonConsts.AppSettings.MarkdownTitle);
+
+            return titleFromConfig != null ? titleFromConfig : "Project documentation";
+        }
     }
 }

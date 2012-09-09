@@ -31,6 +31,7 @@
             string md = this.ContentRepo.GetContentFor(new Uri(localPath));
 
             MarkdownPageModel pm = new MarkdownPageModel {
+                MarkdownTitle = this.GetTitle(),
                 HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md),
                 NavHtml = this.GetNavHtml()
             };
