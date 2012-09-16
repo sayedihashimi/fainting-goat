@@ -6,17 +6,9 @@
 
 @section header{
     @{
-        if(!string.IsNullOrEmpty(Model.NavHtml)){
+        if (!string.IsNullOrEmpty(Model.HeaderHtml)) {
             var hWriter = this.GetOutputWriter();
-            hWriter.Write(Model.NavHtml);
-        }
-        else{
-<header id="topHeader">
-    <section id="headerLogo">
-        <img src="@Url.Content("~/Content/images/logo-16.png")" alt="logo" />
-        <span>@Model.FaintingGoatWebTitle</span>
-    </section>
-</header>
+                hWriter.Write(Model.HeaderHtml);
         }
     }
 }
@@ -24,4 +16,11 @@
 @{ 
     var writer = this.GetOutputWriter();
     writer.Write(Model.HtmlToRender);
+}
+
+@section footer{
+    @if (!string.IsNullOrEmpty(Model.FooterHtml)) {
+        var fWriter = this.GetOutputWriter();
+            fWriter.Write(Model.FooterHtml);
+    }
 }

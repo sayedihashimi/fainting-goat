@@ -49,26 +49,44 @@
             return result;
         }
 
-        protected string GetNavHtml() {
-            string result = string.Empty;
+        protected string GetHeaderHtml() {
+            IList<string> files = this.Config.GetList(CommonConsts.AppSettings.HeaderFiles, defaultValue: CommonConsts.AppSettings.DefaultValues.HeaderFiles);
 
-            List<string> navFilesToTry = new List<string> {
-                this.PathHelper.ConvertMdUriToLocalPath("nav.md", (s) => Server.MapPath(s)),
-                this.PathHelper.ConvertMdUriToLocalPath("nav.markdown", (s) => Server.MapPath(s)),
-                this.PathHelper.ConvertMdUriToLocalPath("nav.mdown", (s) => Server.MapPath(s))
-            };
+            string header = this.GetHtmlFromFirstFound(files);
+            if (header == null) {
+                header = CommonConsts.AppSettings.DefaultValues.HeaderHtml;
+            }
+            return header;
+        }
 
-            string navFile = null;
+        protected string GetFooterHtml() {
+            IList<string> files = this.Config.GetList(CommonConsts.AppSettings.FooterFiles, defaultValue: CommonConsts.AppSettings.DefaultValues.FooterFiles);
+            return this.GetHtmlFromFirstFound(files);
+        }
 
-            foreach (var nf in navFilesToTry) {
+        protected string GetHtmlFromFirstFound(IEnumerable<string> filesToCheck) {
+            if (filesToCheck == null) { throw new ArgumentNullException("filesToCheck"); }
+            string result = null;
+
+            List<string> filesToTryRelative = new List<string>(filesToCheck);
+            List<string>filesToTryAbsolute = new List<string>();
+
+            filesToTryRelative.ForEach(file=>{
+                filesToTryAbsolute.Add(this.PathHelper.ConvertMdUriToLocalPath(file,(s)=>Server.MapPath(s)));
+            });
+
+
+            string currentFile = null;
+
+            foreach (var nf in filesToTryAbsolute) {
                 if (System.IO.File.Exists(nf)) {
-                    navFile = nf;
+                    currentFile = nf;
                     break;
                 }
             }
 
-            if (navFile != null) {
-                string md = this.ContentRepo.GetContentFor(new Uri(navFile));
+            if (currentFile != null) {
+                string md = this.ContentRepo.GetContentFor(new Uri(currentFile));
                 result = this.MarkdownToHtml.ConvertToHtml(md);
             }
 

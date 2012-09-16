@@ -27,7 +27,8 @@
             MarkdownPageModel pm = new MarkdownPageModel {
                 FaintingGoatWebTitle = this.GetTitle(),
                 HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md),
-                NavHtml = this.GetNavHtml()
+                HeaderHtml = this.GetHeaderHtml(),
+                FooterHtml = this.GetFooterHtml()
             };
 
             return pm;
@@ -42,7 +43,8 @@
             MarkdownPageModel pm = new MarkdownPageModel {
                 FaintingGoatWebTitle = this.GetTitle(),
                 HtmlToRender = this.MarkdownToHtml.ConvertToHtml(md),
-                NavHtml = this.GetNavHtml()
+                HeaderHtml = this.GetHeaderHtml(),
+                FooterHtml = this.GetFooterHtml()
             };
 
             return pm;
