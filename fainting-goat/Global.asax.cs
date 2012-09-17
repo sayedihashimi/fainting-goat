@@ -23,6 +23,8 @@
                 lock (KernelLock) {
                     if (MvcApplication.Kernel == null) {
                         MvcApplication.Kernel = this.RegisterNinject();
+
+                        KernelManager.SetKernelResolver(() => { return MvcApplication.Kernel; });
                     }
                 }
             }

@@ -1,5 +1,4 @@
-﻿namespace fainting.goat {
-    using fainting.goat.common;
+﻿namespace fainting.goat.common {
     using Ninject;
     using System;
     using System.IO;
@@ -8,17 +7,13 @@
 
     public class ImageHandler : IHttpAsyncHandler {
 
-        public ImageHandler() {
-
-        }
-
         public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData) {
             AsyncOperation async = new AsyncOperation(cb, context, extraData);
             async.StartAsyncWork();
             return async;
         }
 
-        public void EndProcessRequest(IAsyncResult result) {}
+        public void EndProcessRequest(IAsyncResult result) { }
 
         public bool IsReusable {
             get { return false; }
@@ -52,12 +47,12 @@
         }
 
         public void StartAsyncTask(object workItemState) {
-            IKernel kernel = MvcApplication.Kernel;
+            IKernel kernel = KernelManager.GetKernel();
             IConfig config = kernel.Get<IConfig>();
             IPathHelper pathHelper = kernel.Get<IPathHelper>();
 
             string localPath = Context.Server.MapPath(Context.Request.Url.AbsolutePath);
-            string repoFilePath = pathHelper.ConvertMdUriToLocalPath(Context.Request.Url.AbsolutePath, 
+            string repoFilePath = pathHelper.ConvertMdUriToLocalPath(Context.Request.Url.AbsolutePath,
                 (s) => this.Context.Server.MapPath(s));
 
             string fileToReturn = File.Exists(localPath) ? localPath : repoFilePath;

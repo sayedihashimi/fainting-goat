@@ -50,6 +50,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ngit-updated.1.0.1.1\lib\net35\NGit.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="NSch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ngit-updated.1.0.1.1\lib\net35\NSch.dll</HintPath>
@@ -61,6 +64,8 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,6 +78,8 @@
     <Compile Include="ContentRepository.cs" />
     <Compile Include="GitClient.cs" />
     <Compile Include="GitHelper.cs" />
+    <Compile Include="ImageHandler.cs" />
+    <Compile Include="KernelManager.cs" />
     <Compile Include="MarkdownToHtml.cs" />
     <Compile Include="PathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
