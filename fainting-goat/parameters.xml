@@ -3,7 +3,7 @@
   
   <parameter name="gitUrl"
              description="The URI for the git repository which contains the markdown files to be served"
-             defaultValue="https://github.com/sayedihashimi/fainting-goat.git">
+             defaultValue="https://github.com/sayedihashimi/publish-samples.git">
     <parameterEntry kind="XmlFile" 
                     scope="\\web.config$" 
                     match="/configuration/appSettings/add[@key='gitUri']/@value" />
