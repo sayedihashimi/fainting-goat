@@ -2,7 +2,12 @@
 using System;
 
 namespace fainting.goat.common {
-    public class PathHelper {
+
+    public interface IPathHelper {
+        string ConvertMdUriToLocalPath(string path, Func<string, string> pathCleansingCallback);
+    }
+
+    public class PathHelper : IPathHelper {
         public PathHelper(IConfig config) {
             if(config == null) { throw new ArgumentNullException("config"); }
             this.Config = config;

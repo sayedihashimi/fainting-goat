@@ -12,6 +12,7 @@
             kernel.Bind<IContentRepository>().To<FileContentRepository>();
             kernel.Bind<IConfig>().To<Config>();
             kernel.Bind<IGitClient>().To<NGitGitClient>();
+            kernel.Bind<IPathHelper>().To<PathHelper>();
 
             return kernel;
         }

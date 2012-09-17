@@ -12,7 +12,7 @@
             IMarkdownToHtml markdownToHtml, 
             IContentRepository contentRepo, 
             GitHelper gitHelper,
-            PathHelper pathHelper
+            IPathHelper pathHelper
             )
         {
             if (config == null) { throw new ArgumentNullException("config"); }
@@ -29,7 +29,7 @@
         protected IMarkdownToHtml MarkdownToHtml { get; set; }
         protected IContentRepository ContentRepo { get; set; }
         protected IConfig Config { get; set; }
-        protected PathHelper PathHelper { get; set; }
+        protected IPathHelper PathHelper { get; set; }
         protected GitHelper GitHelper { get; set; }
 
         protected string GetDefaultDocumentFullLocalPath() {

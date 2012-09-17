@@ -13,9 +13,9 @@
     }
 
     public class FileContentRepository : IContentRepository {
-        private PathHelper _pathHelper;
+        private IPathHelper _pathHelper;
 
-        public FileContentRepository(PathHelper pathHelper) {
+        public FileContentRepository(IPathHelper pathHelper) {
             _pathHelper = pathHelper;
         }
 

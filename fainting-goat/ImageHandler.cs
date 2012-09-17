@@ -54,7 +54,7 @@
         public void StartAsyncTask(object workItemState) {
             IKernel kernel = MvcApplication.Kernel;
             IConfig config = kernel.Get<IConfig>();
-            PathHelper pathHelper = new PathHelper(config);
+            IPathHelper pathHelper = kernel.Get<IPathHelper>();
 
             string localPath = Context.Server.MapPath(Context.Request.Url.AbsolutePath);
             string repoFilePath = pathHelper.ConvertMdUriToLocalPath(Context.Request.Url.AbsolutePath, 

@@ -6,7 +6,7 @@
     using System.Web.Mvc;
 
     public class MarkdownController : MarkdownBaseController {
-        public MarkdownController(IConfig config, IMarkdownToHtml markdownToHtml, IContentRepository contentRepo, GitHelper gitHelper, PathHelper pathHelper) :
+        public MarkdownController(IConfig config, IMarkdownToHtml markdownToHtml, IContentRepository contentRepo, GitHelper gitHelper, IPathHelper pathHelper) :
             base(config, markdownToHtml, contentRepo, gitHelper, pathHelper) {
         }
 
