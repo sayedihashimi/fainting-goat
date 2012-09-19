@@ -55,10 +55,13 @@
         {
             if (kernel == null) { throw new ArgumentNullException("kernel"); }
 
-            kernel.Get<GitHelper>().UpdateGitRepo(
-                Server.MapPath(
+            string repoPath = Server.MapPath(
                     kernel.Get<IConfig>().GetConfigValue(
-                        CommonConsts.AppSettings.MarkdownSourceFolder)));
+                        CommonConsts.AppSettings.MarkdownSourceFolder));
+
+            kernel.Get<GitHelper>().UpdateGitRepo(
+                repoPath, 
+                kernel.Get<IConfig>().GetConfigValue(CommonConsts.AppSettings.GitBranchName));                
         }
     }
 }

@@ -22,13 +22,14 @@
             _gitClient = gitClient;
         }
 
-        public void UpdateGitRepo(string path)
+        public void UpdateGitRepo(string path,string branchName)
         {
-            if (string.IsNullOrEmpty(path)) { throw new ArgumentNullException("path"); }            
+            if (string.IsNullOrEmpty(path)) { throw new ArgumentNullException("path"); }
             if (_config == null) { throw new ArgumentNullException("config"); }
 
             if (!Directory.Exists(path)) {
-                this._gitClient.InitalizeRepo(path, this._config.GetConfigValue(CommonConsts.AppSettings.GitUri, isRequired: true));
+                string gitUri = this._config.GetConfigValue(CommonConsts.AppSettings.GitUri, isRequired: true);
+                this._gitClient.InitalizeRepo(path, gitUri, branchName);
             }
             else {
                 Task updateGitRepo = new Task(() => {

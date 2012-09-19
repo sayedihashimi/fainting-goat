@@ -12,17 +12,17 @@
             public const string DefaultDocList = "defaultDocList";
             public const string HeaderFiles = "headerFiles";
             public const string FooterFiles = "footerFiles";
+            public const string GitBranchName = "gitBranchName";
 
             public class DefaultValues {
                 public const string FaintingGoatWebTitle = "Project Documentation";
                 public static readonly IList<string> DefaultDocList = new List<string> { "index.md", "readme.md" };
                 public static readonly IList<string> HeaderFiles = new List<string> { "header.md", "header.markdown", "header.mdown" };
                 public static readonly IList<string> FooterFiles = new List<string> {"footer.md","footer.markdown","footer.mdown"};
-
+                
                 public const string HeaderHtml =
 @"<header id=""topHeader"">
     <section id=""headerLogo"">
-        <img src=""/Content/images/logo-16.png"" alt=""logo"" />
         <span>project doc site</span>
     </section>
 </header>";

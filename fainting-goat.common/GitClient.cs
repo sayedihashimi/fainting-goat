@@ -21,7 +21,10 @@
         /// </summary>
         /// <param name="gitFolder">local folder path to where the .git folder should go</param>
         /// <param name="gitUri">the URL for the git repository</param>
-        void InitalizeRepo(string gitFolder, string gitUri);
+        /// <param name="branchName">Optional: the name of the branch to be fetched. It should be specified
+        /// in the verbose form, i.e. refs/heads/weekly
+        /// </param>
+        void InitalizeRepo(string gitFolder, string gitUri, string branchName);
     }
 
     public class NGitGitClient : IGitClient {
@@ -48,18 +51,28 @@
 
             Git git = new Git(repo);
             PullCommand pullCommand = git.Pull();
-            PullResult pullResult = pullCommand.Call();
+            PullResult pullResult = null;
+
+            // TODO: need to cover this in a try/catch and log errors
+            pullResult = pullCommand.Call();
         }
 
-        public void InitalizeRepo(string gitFolder, string gitUri) {
+        public void InitalizeRepo(string gitFolder, string gitUri, string branchName) {
             if (string.IsNullOrEmpty(gitFolder)) { throw new ArgumentNullException("gitFolder"); }
             if (string.IsNullOrEmpty(gitUri)) { throw new ArgumentNullException("gitUri"); }
 
+            // TODO: need to cover this in a try/catch and log errors
             Task cloneTask = new Task(() => {
                 CloneCommand cloneCommand = Git.CloneRepository();
                 cloneCommand.SetBare(false);
                 cloneCommand.SetDirectory(gitFolder);
                 cloneCommand.SetURI(gitUri);
+
+                if (!string.IsNullOrEmpty(branchName)) {
+                    cloneCommand.SetCloneAllBranches(false);
+                    cloneCommand.SetBranchesToClone(new string[] { branchName });
+                    cloneCommand.SetBranch(branchName);
+                }
 
                 cloneCommand.Call();
             });

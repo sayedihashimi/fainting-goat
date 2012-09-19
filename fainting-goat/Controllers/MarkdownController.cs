@@ -51,7 +51,10 @@
         }
 
         public string UpdateRepo() {
-            GitHelper.UpdateGitRepo(Server.MapPath(Config.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder)));
+            string branchName = this.Config.GetConfigValue(CommonConsts.AppSettings.GitBranchName);
+
+            string repoFolder = Server.MapPath(Config.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder));
+            GitHelper.UpdateGitRepo(repoFolder, branchName);
             return "Updating";
         }
     }
