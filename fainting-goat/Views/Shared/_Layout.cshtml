@@ -9,7 +9,6 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <section id="leftSection">&nbsp;</section>
     <section id="mainSection">
         @RenderSection("header",required:false)
 
@@ -19,7 +18,7 @@
 
         @RenderSection("footer",required:false)
     </section>
-    <section id="rightSection">&nbsp;</section>
+        
 
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
