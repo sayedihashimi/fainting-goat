@@ -36,10 +36,15 @@
             IList<string> defaultDocListConfig = this.Config.GetList(CommonConsts.AppSettings.DefaultDocList, defaultValue: CommonConsts.AppSettings.DefaultValues.DefaultDocList);
 
             string result = null;
+            FullPathCleaner cleaner = new FullPathCleaner(s => Server.MapPath(s));
 
             for (int i = 0; i < defaultDocListConfig.Count; i++) {
                 string fileName = defaultDocListConfig[i];
-                string fileNameLocalpath = this.PathHelper.ConvertMdUriToLocalPath(fileName, (s) => Server.MapPath(s));
+
+                string fileNameLocalpath = this.PathHelper.ConvertMdUriToLocalPath(
+                    fileName,
+                    s => cleaner.CleanPath(s));
+
                 if (System.IO.File.Exists(fileNameLocalpath)) {
                     result = fileNameLocalpath;
                     break;
@@ -71,8 +76,10 @@
             List<string> filesToTryRelative = new List<string>(filesToCheck);
             List<string>filesToTryAbsolute = new List<string>();
 
+            FullPathCleaner cleaner = new FullPathCleaner(s => Server.MapPath(s));
+            
             filesToTryRelative.ForEach(file=>{
-                filesToTryAbsolute.Add(this.PathHelper.ConvertMdUriToLocalPath(file,(s)=>Server.MapPath(s)));
+                filesToTryAbsolute.Add(this.PathHelper.ConvertMdUriToLocalPath(file,(s)=>cleaner.CleanPath(s)));
             });
 
 

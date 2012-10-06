@@ -37,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
@@ -63,6 +66,7 @@
     <Compile Include="BaseTest.cs" />
     <Compile Include="ConfigTests.cs" />
     <Compile Include="CustomAssert.cs" />
+    <Compile Include="FaintingGoatTests.cs" />
     <Compile Include="FileContentRepositoryTests.cs" />
     <Compile Include="Helpers\RandomDataHelper.cs" />
     <Compile Include="Helpers\RandomPrimitives.cs" />

@@ -1,6 +1,7 @@
 ﻿namespace fainting.goat.tests {
     using fainting.goat.common;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moq;
     using System.Collections.Generic;
     using System.Configuration;
 
@@ -38,7 +39,7 @@
             public void ReturnsTheDefaultValueWhenConfigValueNotFound() {
                 IConfig config = new Config();
                 string expectedResult = "default-value";
-                string actualResult = config.GetConfigValue("doesnt-exist", defaultValue: expectedResult);
+                string actualResult = config.GetConfigValue("doesnt-exist", false, defaultValue: expectedResult);
 
                 Assert.AreEqual(expectedResult, actualResult);
             }
@@ -87,6 +88,46 @@
                 IList<string> actualResult = config.GetList("doesnt-exist", defaultValue: expectedResult);
 
                 Assert.AreEqual(expectedResult, actualResult);
+            }
+        }
+
+        [TestClass]
+        public class TheGetContentProviderTypeFromConfigMethod {
+            [TestMethod]
+            public void ReturnsGitWhenConfigHasGitUrl() {
+                var mockConfig = new Mock<IConfig>();
+
+                // for moq you have to specify default params http://code.google.com/p/moq/issues/detail?id=284
+                mockConfig.Setup(config => config
+                    .GetConfigValue(It.IsAny<string>()))
+                    .Returns<string>(s => {
+                        string retValue = null;
+
+                        if (string.Compare(s, CommonConsts.AppSettings.GitUri, System.StringComparison.OrdinalIgnoreCase) == 0) {
+                            retValue = @"https://github.com/sayedihashimi/publish-samples.git";
+                        }
+
+                        return retValue;
+                    });
+
+                MdContentProviderType mdType = Config.GetContentProviderTypeFromConfig(mockConfig.Object);
+
+                Assert.AreEqual(MdContentProviderType.Git, mdType);
+            }
+
+            [TestMethod]
+            public void ReturnsFileSystemWhenConfigDoesNotHaveGirUrl() {
+                var mockConfig = new Mock<IConfig>();
+
+                mockConfig.Setup(config => config
+                    .GetConfigValue(It.IsAny<string>()))
+                    .Returns<string>(s => {
+                        return null;
+                    });
+
+                MdContentProviderType mdType = Config.GetContentProviderTypeFromConfig(mockConfig.Object);
+
+                Assert.AreEqual(MdContentProviderType.FileSystem, mdType);
             }
         }
     }

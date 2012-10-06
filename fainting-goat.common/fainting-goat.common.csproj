@@ -76,11 +76,14 @@
     <Compile Include="CommonConsts.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="ContentRepository.cs" />
+    <Compile Include="FaintingGoat.cs" />
+    <Compile Include="FullPathCleaner.cs" />
     <Compile Include="GitClient.cs" />
     <Compile Include="GitHelper.cs" />
     <Compile Include="ImageHandler.cs" />
     <Compile Include="KernelManager.cs" />
     <Compile Include="MarkdownToHtml.cs" />
+    <Compile Include="MdContentProvider.cs" />
     <Compile Include="PathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

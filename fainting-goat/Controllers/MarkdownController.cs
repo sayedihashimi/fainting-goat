@@ -35,7 +35,8 @@
         }
 
         private MarkdownPageModel MakeMarkDownViewModel(string mdroute) {
-            string localPath = this.PathHelper.ConvertMdUriToLocalPath(mdroute, (s) => Server.MapPath(s));
+            FullPathCleaner cleaner = new FullPathCleaner(s => Server.MapPath(s));
+            string localPath = this.PathHelper.ConvertMdUriToLocalPath(mdroute, s => cleaner.CleanPath(s));
             if (!System.IO.File.Exists(localPath)) { throw new FileNotFoundException(string.Format("Markdown file not found at [{0}]", localPath)); }
 
             string md = this.ContentRepo.GetContentFor(new Uri(localPath));
@@ -51,10 +52,12 @@
         }
 
         public string UpdateRepo() {
-            string branchName = this.Config.GetConfigValue(CommonConsts.AppSettings.GitBranchName);
+            FullPathCleaner cleaner = new FullPathCleaner(s => Server.MapPath(s));
+            string repoFolder = cleaner.CleanPath(Config.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder));
 
-            string repoFolder = Server.MapPath(Config.GetConfigValue(CommonConsts.AppSettings.MarkdownSourceFolder));
-            GitHelper.UpdateGitRepo(repoFolder, branchName);
+            new FaintingGoat(this.Config, repoFolder).Update();
+
+
             return "Updating";
         }
     }

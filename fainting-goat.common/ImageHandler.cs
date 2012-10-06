@@ -50,10 +50,11 @@
             IKernel kernel = KernelManager.GetKernel();
             IConfig config = kernel.Get<IConfig>();
             IPathHelper pathHelper = kernel.Get<IPathHelper>();
+            FullPathCleaner cleaner = new FullPathCleaner(s => Context.Server.MapPath(s));
 
-            string localPath = Context.Server.MapPath(Context.Request.Url.AbsolutePath);
+            string localPath = cleaner.CleanPath(Context.Request.Url.AbsolutePath);
             string repoFilePath = pathHelper.ConvertMdUriToLocalPath(Context.Request.Url.AbsolutePath,
-                (s) => this.Context.Server.MapPath(s));
+                s => cleaner.CleanPath(s));
 
             string fileToReturn = File.Exists(localPath) ? localPath : repoFilePath;
 

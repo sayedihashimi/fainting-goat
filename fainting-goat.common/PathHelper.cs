@@ -1,5 +1,6 @@
 ﻿using fainting.goat.common;
 using System;
+using System.Text.RegularExpressions;
 
 namespace fainting.goat.common {
 
@@ -29,5 +30,25 @@ namespace fainting.goat.common {
 
             return localPath;
         }
+
+        public static string PathCleaner(string path,Func<string,string>webPathCleaner) {
+            if (string.IsNullOrEmpty(path)) { throw new ArgumentNullException("path"); }
+
+            string result = null;
+            // if it doesn't start with ~ or / assume its a full directory path and just return it
+            string pattern = @"^\s*[~\\/]";
+
+            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(pattern);
+
+            if (regex.IsMatch(path)) {
+                result = path;
+            }
+            else {
+                result = webPathCleaner(path);
+            }
+
+            return result;
+        }
+
     }
 }

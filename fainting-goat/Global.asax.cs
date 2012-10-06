@@ -54,14 +54,13 @@
         private void UpdateGitRepo(IKernel kernel)
         {
             if (kernel == null) { throw new ArgumentNullException("kernel"); }
-
-            string repoPath = Server.MapPath(
-                    kernel.Get<IConfig>().GetConfigValue(
+            FullPathCleaner cleaner = new FullPathCleaner(s => Server.MapPath(s));
+            string repoPath = cleaner.CleanPath(
+                kernel.Get<IConfig>().GetConfigValue(
                         CommonConsts.AppSettings.MarkdownSourceFolder));
 
-            kernel.Get<GitHelper>().UpdateGitRepo(
-                repoPath, 
-                kernel.Get<IConfig>().GetConfigValue(CommonConsts.AppSettings.GitBranchName));                
+
+            new FaintingGoat(kernel.Get<IConfig>(), repoPath).Update();
         }
     }
 }
