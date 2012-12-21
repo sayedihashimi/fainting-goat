@@ -13,6 +13,7 @@
             public const string HeaderFiles = "headerFiles";
             public const string FooterFiles = "footerFiles";
             public const string GitBranchName = "gitBranchName";
+            public const string GitAutoUpdateOnAppStart = "gitAutoUpdateOnAppStart";
 
             public class DefaultValues {
                 public const string FaintingGoatWebTitle = "Project Documentation";

@@ -54,13 +54,19 @@
         private void UpdateGitRepo(IKernel kernel)
         {
             if (kernel == null) { throw new ArgumentNullException("kernel"); }
-            FullPathCleaner cleaner = new FullPathCleaner(s => Server.MapPath(s));
-            string repoPath = cleaner.CleanPath(
-                kernel.Get<IConfig>().GetConfigValue(
-                        CommonConsts.AppSettings.MarkdownSourceFolder));
 
+            IConfig config = kernel.Get<IConfig>();
+            // first check to see if we should automaticall update or not
 
-            new FaintingGoat(kernel.Get<IConfig>(), repoPath).Update();
+            bool autoUpadate = bool.Parse(config.GetConfigValue(CommonConsts.AppSettings.GitAutoUpdateOnAppStart, false, "true"));
+            if (autoUpadate) {
+                FullPathCleaner cleaner = new FullPathCleaner(s => Server.MapPath(s));
+                string repoPath = cleaner.CleanPath(
+                    config.GetConfigValue(
+                            CommonConsts.AppSettings.MarkdownSourceFolder));
+
+                new FaintingGoat(kernel.Get<IConfig>(), repoPath).Update();
+            }
         }
     }
 }
