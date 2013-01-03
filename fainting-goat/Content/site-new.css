@@ -1,0 +1,105 @@
+﻿html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: "Segoe UI", Tahoma, Helvetica, Sans-Serif;
+    background-color:#eeeeee;
+}
+img {
+    border-style: none;
+    max-width:100%;
+}
+a {
+    text-decoration:none;
+}
+ul, .noList {
+    list-style:none;
+}
+ol {
+    padding-top:0;
+}
+.hidden {
+    display:none;
+    visibility:hidden;
+}
+
+.pageCenter {
+    width:960px;
+    margin:0px auto;
+}
+.pageTitle {
+    font-size: 66px;
+    font-weight:300;
+}
+.solidBand {
+    height:10px;
+    background-color:#302E2F;
+    background-color:white;
+    width:100%;
+}
+.solidBand2 {
+    background-color:black;
+}
+.headerBandBottom {
+    position:fixed;
+    height:10px;
+    top:115px;
+    left:0;
+}
+.pageContent {
+    margin: 125px auto;
+}
+.band400 {
+    height:400px;
+    width:100%;    
+}
+
+.textXxl {
+    font-size: 66px;
+    line-height:66px;
+    font-weight:400;
+    color:#454545;
+    text-align:right;
+    width:100%;
+}
+
+
+pre code {
+    display:block;
+    background-color:#454545;
+    color:#BAD80A;
+    padding-left:20px;
+}
+code {
+    font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+#pageHeader {
+    height:125px;
+    width:100%;
+    position:fixed;
+    top:0;
+    opacity:0.9;
+    text-align:center;
+    background-color:#313131;
+    color:white;
+}
+    #pageHeader a {
+        color:white;
+    }
+#pageFooter {
+    text-align:center;
+    background-color:#313131;
+    color:black;
+}
+    #pageFooter a {
+        color:white;
+    }
+#pageContent article:nth-child(odd) {
+    background-color:#d4d3cf;
+}
+#pageContent article:nth-child(even) {
+    background-color:white;
+}

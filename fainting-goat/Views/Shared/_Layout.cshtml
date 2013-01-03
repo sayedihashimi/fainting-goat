@@ -9,18 +9,44 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <section id="mainSection">
-        @RenderSection("header",required:false)
+    @RenderSection("header",required:false)
 
-        <article id="articleBody">
-        @RenderBody()
-        </article>
+    <header id="pageHeader">
+        <div class="solidBand"></div>
+        <section class="pageCenter">
+            <a class="pageTitle" href="/">ASP.NET Web Publishing</a>
+        </section>
+        <div class="solidBand headerBandBottom"></div>
+    </header>
 
-        @RenderSection("footer",required:false)
-    </section>
-        
+    <section id="pageContent" class="pageContent">@RenderBody()</section>
+
+    @RenderSection("footer",required:false)
+    <footer id="pageFooter">
+        <div class="solidBand solidBand2"></div>
+            <section class="pageCenter">
+            <p id="legal"> --- (c) 2012 <a href="http://sedodream.com/">Sayed Ibrahim Hashimi</a>. All Rights Reserved. --- </p>
+            </section>
+        <div class="solidBand solidBand2"></div>
+    </footer>
+
 
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-1450990-14']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+
 </body>
 </html>

@@ -11,8 +11,14 @@
         }
 
         public ActionResult Index() {
-            return View(@"/Views/Markdown/Render.cshtml",
-                this.MakeMarkDownViewModelFromLocalPath(this.GetDefaultDocumentFullLocalPath()));
+            var pathToDefaultMd = this.GetDefaultDocumentFullLocalPath();
+
+            if (!string.IsNullOrEmpty(pathToDefaultMd)){
+                return View(@"/Views/Markdown/Render.cshtml",
+                this.MakeMarkDownViewModelFromLocalPath(pathToDefaultMd));
+            }
+
+            return View("Default");
         }
 
         public ActionResult Render(string mdroute) {
